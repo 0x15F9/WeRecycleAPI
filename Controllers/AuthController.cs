@@ -18,12 +18,11 @@ namespace API.Controllers
             _auth = auth;
         }
 
-        [HttpGet]
-        public ActionResult<LoginRes> Login(LoginReq login)
+        [HttpPost]
+        public async Task<ActionResult<LoginRes>> Login(LoginReq login)
         {
-            var user = _auth.Login(login);
-
-            return user == null ? Unauthorized() : Ok(user);
+            LoginRes res = await _auth.Login(login);
+            return res == null ? Unauthorized() : Ok(res);
         }
 
         [HttpPost]

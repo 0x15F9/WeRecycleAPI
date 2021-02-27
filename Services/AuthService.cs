@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using API.DTO;
@@ -13,21 +14,29 @@ namespace API.Services
         private readonly DataContext _context;
         private readonly ILogger _logger;
         private readonly IMapper _mapper;
+        private readonly ITokenService _token;
 
         public AuthService(
             ILogger<AuthService> logger, 
             DataContext context, 
-            IMapper mapper
+            IMapper mapper,
+            ITokenService token
         )
         {
             _context = context;
             _logger = logger;
             _mapper = mapper;
+            _token = token;
         }
 
-        public Task<LoginRes> Login(LoginReq req)
+        public async Task<LoginRes> Login(LoginReq req)
         {
-            throw new System.NotImplementedException();
+            User user = await _context.Users.FirstAsync(u => u.PhoneNumber == req.PhoneNumber);
+            if(!VerifyPassword(req.Password, user.PasswordHash, user.PasswordSalt))
+                return null;
+            LoginRes reponse = _mapper.Map<LoginRes>(user);
+            reponse.Token = _token.Generate(user);
+            return reponse;
         }
 
         public async Task<LoginRes> RegisterDriver(CreateDriver driverDto)
@@ -45,7 +54,7 @@ namespace API.Services
             await _context.SaveChangesAsync();
 
             LoginRes response = _mapper.Map<LoginRes>(driver);
-            // TODO: add token
+            response.Token = _token.Generate(driver);
 
             return response;
         }

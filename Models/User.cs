@@ -4,6 +4,7 @@ namespace API.Models
 {
     public abstract class User
     {
+        [Key]
         public int Id { set; get; }
         
         [Required]
