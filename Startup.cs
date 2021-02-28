@@ -99,6 +99,7 @@ namespace API
             // DI
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IBinService, BinService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

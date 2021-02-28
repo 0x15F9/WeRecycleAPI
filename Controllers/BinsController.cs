@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+using API.DTO;
 using API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,18 +13,39 @@ namespace API.Controllers
     public class BinsController : ControllerBase
     {
         private readonly ILogger<BinsController> _logger;
-        private readonly ITokenService _service;
-        public BinsController(ILogger<BinsController> logger, ITokenService service)
+        private readonly IBinService _bins;
+
+        public BinsController(ILogger<BinsController> logger, IBinService bins)
         {
             _logger = logger;
-            _service = service;
+            _bins = bins;
         }
 
         [HttpGet]
-        [Authorize(Roles = "DRIVER", Policy = "MustBeAppproved")]
-        public IActionResult Driver()
+        public IActionResult Get()
         {
-            return Ok("Ok");
+            return Ok(_bins.ReadBin());
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "ADMIN")]
+        public async Task<IActionResult> New(CreateBin dto)
+        {
+            return Ok(await _bins.CreateBin(dto));
+        }
+
+        [HttpDelete]
+        [Authorize(Roles = "ADMIN")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            return await _bins.DeleteBin(id) ? Ok("Deleted") : NotFound("Failed to delete");
+        }
+
+        [HttpPatch]
+        [Authorize(Roles = "ADMIN")]
+        public async Task<IActionResult> Update(UpdateBin dto)
+        {
+            return Ok(await _bins.UpdateBin(dto));
         }
     }
 }

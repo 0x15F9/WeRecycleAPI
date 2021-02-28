@@ -10,6 +10,10 @@ namespace API.Helpers
         {
             CreateMap<CreateDriver, Driver>();
             CreateMap<User, LoginRes>();
+
+            CreateMap<CreateBin, Bin>();
+            CreateMap<UpdateBin, Bin>();
+            CreateMap<Bin, BinRes>();
         }
     }
 }
