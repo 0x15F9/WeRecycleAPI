@@ -1,0 +1,27 @@
+[
+    {
+        "FirstName": "Admin",
+        "LastName": "Istrator",
+        "PhoneNumber": "51111111"
+    },
+    {
+        "FirstName": "Karen",
+        "LastName": "",
+        "PhoneNumber": "59708497"
+    },
+    {
+        "FirstName": "Elaine",
+        "LastName": "King",
+        "PhoneNumber": "52556878"
+    },
+    {
+        "FirstName": "Ronnie",
+        "LastName": "Klotz",
+        "PhoneNumber": "59304737"
+    },
+    {
+        "FirstName": "Antoine",
+        "LastName": "King",
+        "PhoneNumber": "52510228"
+    }
+]
