@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using API.Models;
 
 namespace API.Services
@@ -8,6 +9,6 @@ namespace API.Services
     {
         string Generate(User user);
 
-        User Parse(IEnumerable<Claim> claims);
+        Task<User> Parse(IEnumerable<Claim> claims);
     }
 }

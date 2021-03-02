@@ -8,8 +8,10 @@ namespace API.Helpers
     {
         public AutoMapperProfiles()
         {
+            CreateMap<CreateDriverForm, CreateDriver>();
             CreateMap<CreateDriver, Driver>();
             CreateMap<User, LoginRes>();
+            CreateMap<Driver, DriverAccount>();
 
             CreateMap<CreateBin, Bin>();
             CreateMap<UpdateBin, Bin>();

@@ -1,8 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace API.DTO
 {
-    public class CreateDriver
+    public class CreateDriverForm
     {
 
         [Required]
@@ -19,12 +20,12 @@ namespace API.DTO
         public string Password { get; set; }
         
         [Required]
-        public string IdCard { set; get; }
+        public IFormFile IdCard { set; get; }
         
         [Required]
-        public string DrivingLicense { set; get; }
+        public IFormFile DrivingLicense { set; get; }
         
         [Required]
-        public string ProofOfAddress { set; get; }
+        public IFormFile ProofOfAddress { set; get; }
     }
 }

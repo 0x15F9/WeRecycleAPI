@@ -3,15 +3,17 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210301195029_AddPickupRoute")]
+    partial class AddPickupRoute
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,9 +56,6 @@ namespace API.Migrations
                     b.Property<string>("BeforeImage")
                         .HasColumnType("text");
 
-                    b.Property<int?>("BinId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("RouteId")
                         .HasColumnType("text");
 
@@ -64,8 +63,6 @@ namespace API.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BinId");
 
                     b.HasIndex("RouteId");
 
@@ -149,15 +146,9 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.Pickup", b =>
                 {
-                    b.HasOne("API.Models.Bin", "Bin")
-                        .WithMany()
-                        .HasForeignKey("BinId");
-
                     b.HasOne("API.Models.Route", null)
                         .WithMany("Pickups")
                         .HasForeignKey("RouteId");
-
-                    b.Navigation("Bin");
                 });
 
             modelBuilder.Entity("API.Models.Route", b =>

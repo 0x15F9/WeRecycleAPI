@@ -49,13 +49,14 @@ namespace API.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public User Parse(IEnumerable<Claim> claims)
+        public async Task<User> Parse(IEnumerable<Claim> claims)
         {
             int id = int.Parse(claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
             // UserRole role = (UserRole)UserRole.Parse(typeof(UserRole), claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value);
 
-            User user = _context.Users.FirstOrDefault(u => u.Id == id);
+            User user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
 
+            return user;
             // switch (role)
             // {
             //     case UserRole.ADMIN:
@@ -70,8 +71,6 @@ namespace API.Services
             //         user = _context.Users.First(u => u.Id == id);
             //         break;
             // }
-            if (user == null) return user;
-            return user.Status.Equals(UserStatus.APPROVED) ? user : null;
         }
     }
 }

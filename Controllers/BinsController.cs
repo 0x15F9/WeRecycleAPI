@@ -9,6 +9,7 @@ namespace API.Controllers
 {
 
     [ApiController]
+    [Authorize(Roles = "ADMIN")]
     [Route("api/[controller]/[action]")]
     public class BinsController : ControllerBase
     {
@@ -22,27 +23,25 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Get()
         {
             return Ok(_bins.ReadBin());
         }
 
         [HttpPost]
-        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> New(CreateBin dto)
         {
             return Ok(await _bins.CreateBin(dto));
         }
 
         [HttpDelete]
-        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Delete(int id)
         {
             return await _bins.DeleteBin(id) ? Ok("Deleted") : NotFound("Failed to delete");
         }
 
         [HttpPatch]
-        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Update(UpdateBin dto)
         {
             return Ok(await _bins.UpdateBin(dto));
