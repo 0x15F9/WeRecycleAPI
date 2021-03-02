@@ -1,7 +1,10 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.DTO;
+using API.Models;
 using API.Services;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -16,17 +19,23 @@ namespace API.Controllers
         private readonly IAuthService _auth;
         private readonly IMapper _mapper;
         private readonly IUploadService _upload;
+        private readonly IAccountManagementService _account;
+        private readonly ITokenService _token;
 
         public AccountController(
             ILogger<AccountController> logger, 
             IAuthService auth, 
             IMapper mapper,
-            IUploadService upload
+            IUploadService upload,
+            IAccountManagementService account,
+            ITokenService token
         ) {
             _logger = logger;
             _auth = auth;
             _upload = upload;
             _mapper = mapper;
+            _account = account;
+            _token = token;
         }
 
         [HttpPost]
@@ -55,11 +64,30 @@ namespace API.Controllers
             return Ok(driver);
         }
 
-        // View own account
+        [HttpGet]
+        [Authorize(Roles = "DRIVER")]
+        public async Task<ActionResult<IEnumerable<DriverAccount>>> Driver()
+        {
+            // get driver id from token
+            User user = await _token.Parse(User.Claims);
+            return Ok(await _account.GetDriver(user.Id));
+        }
 
         // View drivers as admin
+        [HttpGet]
+        [Authorize(Roles = "ADMIN")]
+        public ActionResult<IEnumerable<DriverAccount>> Drivers(){
+            return Ok(_account.GetDrivers());
+        }
 
         // Validate driver as admin
+        [HttpPatch]
+        [Authorize(Roles = "ADMIN")]
+        public async Task<ActionResult<DriverAccount>> UpdateStatus(int driverId, UserStatus newStatus) {
+            return Ok(await _account.ChangeStatus(driverId, newStatus));
+        }
+
+        // TODO: Change password
 
     }
 }

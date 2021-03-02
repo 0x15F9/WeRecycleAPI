@@ -11,5 +11,8 @@ namespace API.Models
         public string BeforeImage { set; get; }
         public string AfterImage { set; get; }
         public string Weight { set; get; }
+        
+        [Required]
+        public Bin Bin { set; get; }
     }
 }

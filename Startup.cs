@@ -103,6 +103,7 @@ namespace API
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IBinService, BinService>();
             services.AddScoped<IUploadService, UploadService>();
+            services.AddScoped<IAccountManagementService, AccountManagementService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
