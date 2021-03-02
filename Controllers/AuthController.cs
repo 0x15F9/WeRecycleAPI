@@ -55,12 +55,5 @@ namespace API.Controllers
             return Ok(driver);
         }
 
-        // [HttpPatch]
-        // public async Task<ActionResult<string>> UploadPhoto(IFormFile file, int driverId){
-        //     // TODO: extract id from token to prevent misuse
-        //     // use driverid to upload file to prevent multi upload
-        //     // rename here itself
-        //     return Ok(await _upload.UploadImage(file, "drivers", driverId.ToString()));
-        // }
     }
 }
