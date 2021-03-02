@@ -13,6 +13,8 @@ namespace API.Data
         public DbSet<Admin> Admins { set; get; }
         public DbSet<Driver> Drivers { set; get; }
         public DbSet<Bin> Bins { set; get; }
+        public DbSet<Pickup> Pickups { set; get; }
+        public DbSet<Route> Routes { set; get; }
 
     }
 }

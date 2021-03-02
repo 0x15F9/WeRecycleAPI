@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using API.DTO;
 using API.Services;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -12,10 +13,12 @@ namespace API.Controllers
     {
         private readonly ILogger<AuthController> _logger;
         private readonly IAuthService _auth;
+        private readonly IMapper _mapper;
 
-        public AuthController(ILogger<AuthController> logger, IAuthService auth) {
+        public AuthController(ILogger<AuthController> logger, IAuthService auth, IMapper mapper) {
             _logger = logger;
             _auth = auth;
+            _mapper = mapper;
         }
 
         [HttpPost]
@@ -26,11 +29,19 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<LoginRes>> RegisterDriver(CreateDriver driver)
+        public async Task<ActionResult<LoginRes>> RegisterDriver([FromForm]CreateDriverForm form)
         {
-            var user = await _auth.RegisterDriver(driver);
 
-            return user == null ? Unauthorized() : Ok(user);
+            CreateDriver dto =  _mapper.Map<CreateDriver>(form);
+            // save files and get names
+            // append image paths
+
+            var driver = await _auth.RegisterDriver(dto);
+    
+
+
+
+            return driver == null ? Unauthorized() : Ok(driver);
         }
 
 
