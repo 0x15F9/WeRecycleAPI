@@ -102,6 +102,7 @@ namespace API
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IBinService, BinService>();
+            services.AddScoped<IUploadService, UploadService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -122,8 +123,8 @@ namespace API
             app.UseStaticFiles();
 
             app.UseStaticFiles(new StaticFileOptions() {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"uploads")),
-                RequestPath = new Microsoft.AspNetCore.Http.PathString("/uploads")
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Uploads")),
+                RequestPath = new Microsoft.AspNetCore.Http.PathString("/Uploads")
             });
 
             app.UseRouting();
