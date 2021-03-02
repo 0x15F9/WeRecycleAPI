@@ -10,15 +10,15 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class AuthController : ControllerBase
+    public class AccountController : ControllerBase
     {
-        private readonly ILogger<AuthController> _logger;
+        private readonly ILogger<AccountController> _logger;
         private readonly IAuthService _auth;
         private readonly IMapper _mapper;
         private readonly IUploadService _upload;
 
-        public AuthController(
-            ILogger<AuthController> logger, 
+        public AccountController(
+            ILogger<AccountController> logger, 
             IAuthService auth, 
             IMapper mapper,
             IUploadService upload
@@ -54,6 +54,12 @@ namespace API.Controllers
 
             return Ok(driver);
         }
+
+        // View own account
+
+        // View drivers as admin
+
+        // Validate driver as admin
 
     }
 }
