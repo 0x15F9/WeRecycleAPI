@@ -52,25 +52,20 @@ namespace API.Services
         public async Task<User> Parse(IEnumerable<Claim> claims)
         {
             int id = int.Parse(claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
-            // UserRole role = (UserRole)UserRole.Parse(typeof(UserRole), claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value);
+            UserRole role = (UserRole)UserRole.Parse(typeof(UserRole), claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value);
 
-            User user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            switch (role)
+            {
+                case UserRole.ADMIN:
+                    return await _context.Admins.FirstOrDefaultAsync(u => u.Id == id);
 
-            return user;
-            // switch (role)
-            // {
-            //     case UserRole.ADMIN:
-            //         user = _context.Admins.First(u => u.Id == id);
-            //         break;
+                case UserRole.DRIVER:
+                    return await _context.Drivers.FirstOrDefaultAsync(u => u.Id == id);
 
-            //     case UserRole.DRIVER:
-            //         user = _context.Drivers.First(u => u.Id == id);
-            //         break;
+                default:
+                    return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            }
 
-            //     default:
-            //         user = _context.Users.First(u => u.Id == id);
-            //         break;
-            // }
         }
     }
 }

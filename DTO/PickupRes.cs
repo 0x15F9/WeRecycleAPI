@@ -1,18 +1,10 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace API.Models
+namespace API.DTO
 {
-    public class Pickup
+    public class PickupRes
     {
-
-        [Key]
         public int Id { set; get; }
         public string BeforeImage { set; get; }
         public string AfterImage { set; get; }
         public string Weight { set; get; }
-
-        public Route Route { set; get; }
-
     }
 }

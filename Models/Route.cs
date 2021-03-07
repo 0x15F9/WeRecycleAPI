@@ -7,7 +7,7 @@ namespace API.Models
     public class Route
     {
         [Key]
-        public string Id { set; get; }
+        public int Id { set; get; }
 
         public DateTime Date { set; get; }
 
