@@ -1,5 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using API.DTO;
+using API.Models;
 using API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +31,15 @@ namespace API.Controllers
         public IActionResult Get()
         {
             return Ok(_bins.ReadBin());
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult GetBinMaterials()
+        {
+            Dictionary<string, int> enumList = ((BinMaterial[])Enum.GetValues(typeof(BinMaterial))).ToDictionary(k => k.ToString(), v => (int)v);
+
+            return Ok(enumList);
         }
 
         [HttpPost]
