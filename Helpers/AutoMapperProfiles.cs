@@ -12,6 +12,7 @@ namespace API.Helpers
             CreateMap<CreateDriver, Driver>();
             CreateMap<User, LoginRes>();
             CreateMap<Driver, DriverAccount>();
+            CreateMap<Admin, AdminAccount>();
 
             CreateMap<CreateBin, Bin>();
             CreateMap<UpdateBin, Bin>();

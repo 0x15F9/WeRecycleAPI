@@ -73,6 +73,16 @@ namespace API.Controllers
             return Ok(await _account.GetDriver(user.Id));
         }
 
+
+        [HttpGet]
+        [Authorize(Roles = "ADMIN")]
+        public async Task<ActionResult<IEnumerable<AdminAccount>>> Admin()
+        {
+            // get admin id from token
+            User user = await _token.Parse(User.Claims);
+            return Ok(await _account.GetAdmin(user.Id));
+        }
+
         // View drivers as admin
         [HttpGet]
         [Authorize(Roles = "ADMIN")]
@@ -87,7 +97,12 @@ namespace API.Controllers
             return Ok(await _account.ChangeStatus(driverId, newStatus));
         }
 
-        // TODO: Change password
-
+        [HttpPatch]
+        [Authorize(Roles = "ADMIN, DRIVER")]
+        public async Task<ActionResult<bool>> UpdatePassword(UpdatePassword dto)
+        {
+            User user = await _token.Parse(User.Claims);
+            return Ok(await _auth.UpdatePassword(user, dto));
+        }
     }
 }

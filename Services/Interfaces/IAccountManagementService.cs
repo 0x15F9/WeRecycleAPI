@@ -11,5 +11,7 @@ namespace API.Services
         Task<DriverAccount> ChangeStatus(int driverId, UserStatus status);
 
         Task<DriverAccount> GetDriver(int driverId);
+
+        Task<AdminAccount> GetAdmin(int adminId);
     }
 }
