@@ -14,5 +14,6 @@ namespace API.Models
         public IEnumerable<Pickup> Pickups{ set; get; }
 
         public Driver Driver { set; get; }
+
     }
 }
