@@ -59,9 +59,7 @@ namespace API.Controllers
 
             var driver = await _auth.RegisterDriver(dto);
 
-            // TODO: catch collisions
-
-            return Ok(driver);
+            return driver == null ? Conflict() :Ok(driver);
         }
 
         [HttpGet]
