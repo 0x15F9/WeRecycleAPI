@@ -25,6 +25,10 @@ namespace API.Helpers
                 .ForMember(
                     dest => dest.DriverId,
                     opts => opts.MapFrom(source => source.Driver.Id)
+                )
+                .ForMember(
+                    dest => dest.DriverName,
+                    opts => opts.MapFrom(source => source.Driver.FirstName + " " + source.Driver.LastName)
                 );
             CreateMap<Pickup, PickupRes>();
         }

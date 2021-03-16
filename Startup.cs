@@ -123,8 +123,6 @@ namespace API
             app.UseCors(x => x.AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader()
-                .SetIsOriginAllowed((host) => true)
-                .AllowCredentials()
             );
             
             app.UseStaticFiles();
