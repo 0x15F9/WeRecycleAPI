@@ -58,6 +58,7 @@ namespace API.Services
             CreatePickup pickup = _mapper.Map<CreatePickup>(route);
             pickup.BeforeImage = newRoute.BeforeImage;
             pickup.AfterImage = newRoute.AfterImage;
+            pickup.Weight = newRoute.Weight;
             pickup.RouteId = route.Id;
             return await AddPickup(pickup);
         }
