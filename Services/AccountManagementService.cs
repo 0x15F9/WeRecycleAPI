@@ -16,7 +16,10 @@ namespace API.Services
         private readonly DataContext _context;
         private readonly IMapper _mapper;
 
-        public AccountManagementService(ILogger<AccountManagementService> logger, DataContext context, IMapper mapper)
+        public AccountManagementService(
+            ILogger<AccountManagementService> logger, 
+            DataContext context, IMapper mapper
+        )
         {
             _logger = logger;
             _context = context;
@@ -29,6 +32,12 @@ namespace API.Services
             driver.Status = status;
             await _context.SaveChangesAsync();
             return _mapper.Map<DriverAccount>(driver);
+        }
+
+        public async Task<AdminAccount> GetAdmin(int adminId)
+        {
+            Admin admin = await _context.Admins.FirstOrDefaultAsync(d => d.Id == adminId);
+            return _mapper.Map<AdminAccount>(admin);
         }
 
         public async Task<DriverAccount> GetDriver(int driverId)

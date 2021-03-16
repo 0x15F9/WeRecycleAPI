@@ -7,12 +7,13 @@ namespace API.Models
     public class Route
     {
         [Key]
-        public string Id { set; get; }
+        public int Id { set; get; }
 
         public DateTime Date { set; get; }
 
         public IEnumerable<Pickup> Pickups{ set; get; }
 
         public Driver Driver { set; get; }
+
     }
 }

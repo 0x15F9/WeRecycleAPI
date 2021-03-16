@@ -45,8 +45,10 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.Pickup", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("AfterImage")
                         .HasColumnType("text");
@@ -54,18 +56,13 @@ namespace API.Migrations
                     b.Property<string>("BeforeImage")
                         .HasColumnType("text");
 
-                    b.Property<int?>("BinId")
+                    b.Property<int?>("RouteId")
                         .HasColumnType("integer");
-
-                    b.Property<string>("RouteId")
-                        .HasColumnType("text");
 
                     b.Property<string>("Weight")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BinId");
 
                     b.HasIndex("RouteId");
 
@@ -74,8 +71,10 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.Route", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp without time zone");
@@ -149,15 +148,11 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.Pickup", b =>
                 {
-                    b.HasOne("API.Models.Bin", "Bin")
-                        .WithMany()
-                        .HasForeignKey("BinId");
-
-                    b.HasOne("API.Models.Route", null)
+                    b.HasOne("API.Models.Route", "Route")
                         .WithMany("Pickups")
                         .HasForeignKey("RouteId");
 
-                    b.Navigation("Bin");
+                    b.Navigation("Route");
                 });
 
             modelBuilder.Entity("API.Models.Route", b =>

@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210228023509_AddBins")]
-    partial class AddBins
+    [Migration("20210307144153_CreateRoute")]
+    partial class CreateRoute
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,6 +43,52 @@ namespace API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Bins");
+                });
+
+            modelBuilder.Entity("API.Models.Pickup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("AfterImage")
+                        .HasColumnType("text");
+
+                    b.Property<string>("BeforeImage")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("RouteId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Weight")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RouteId");
+
+                    b.ToTable("Pickups");
+                });
+
+            modelBuilder.Entity("API.Models.Route", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("DriverId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DriverId");
+
+                    b.ToTable("Routes");
                 });
 
             modelBuilder.Entity("API.Models.User", b =>
@@ -102,6 +148,24 @@ namespace API.Migrations
                     b.ToTable("Drivers");
                 });
 
+            modelBuilder.Entity("API.Models.Pickup", b =>
+                {
+                    b.HasOne("API.Models.Route", "Route")
+                        .WithMany("Pickups")
+                        .HasForeignKey("RouteId");
+
+                    b.Navigation("Route");
+                });
+
+            modelBuilder.Entity("API.Models.Route", b =>
+                {
+                    b.HasOne("API.Models.Driver", "Driver")
+                        .WithMany("Routes")
+                        .HasForeignKey("DriverId");
+
+                    b.Navigation("Driver");
+                });
+
             modelBuilder.Entity("API.Models.Admin", b =>
                 {
                     b.HasOne("API.Models.User", null)
@@ -118,6 +182,16 @@ namespace API.Migrations
                         .HasForeignKey("API.Models.Driver", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("API.Models.Route", b =>
+                {
+                    b.Navigation("Pickups");
+                });
+
+            modelBuilder.Entity("API.Models.Driver", b =>
+                {
+                    b.Navigation("Routes");
                 });
 #pragma warning restore 612, 618
         }

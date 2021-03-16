@@ -85,5 +85,20 @@ namespace API.Services
             }
             return true; //if no mismatches.
         }
+
+        public async Task<bool> UpdatePassword(User user, UpdatePassword dto)
+        {
+            if(!VerifyPassword(dto.CurrentPassword, user.PasswordHash, user.PasswordSalt))
+                return false;
+
+            byte[] passwordHash, passwordSalt;
+            CreatePasswordHash(dto.NewPassword, out passwordHash, out passwordSalt);
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+
+            // await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

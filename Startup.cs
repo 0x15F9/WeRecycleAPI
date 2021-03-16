@@ -57,7 +57,7 @@ namespace API
 
             services.AddAuthorization(opt =>
             {
-                opt.AddPolicy("MustBeAppproved", builder =>
+                opt.AddPolicy("MustBeApproved", builder =>
                 {
                     builder.RequireClaim("Status", "APPROVED");
                 });
@@ -104,6 +104,7 @@ namespace API
             services.AddScoped<IBinService, BinService>();
             services.AddScoped<IUploadService, UploadService>();
             services.AddScoped<IAccountManagementService, AccountManagementService>();
+            services.AddScoped<IRouteService, RouteService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

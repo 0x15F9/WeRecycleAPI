@@ -13,5 +13,6 @@ namespace API.Services
         Task<LoginRes> Login(LoginReq req);
 
         // Reset Password
+        Task<bool> UpdatePassword(User user, UpdatePassword dto);
     }
 }
